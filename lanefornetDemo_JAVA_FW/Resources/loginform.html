@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration and Login Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        #app {
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            margin-bottom: 20px;
+            width: 300px;
+        }
+        h2 {
+            margin: 0 0 20px 0;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="registration" class="app">
+        <h2>Register</h2>
+        <input type="text" id="reg-username" placeholder="Username">
+        <input type="password" id="reg-password" placeholder="Password">
+        <button id="register">Register</button>
+        <div class="message" id="reg-message"></div>
+    </div>
+    <div id="login" class="app">
+        <h2>Login</h2>
+        <input type="text" id="login-username" placeholder="Username">
+        <input type="password" id="login-password" placeholder="Password">
+        <button id="login-button">Login</button>
+        <div class="message" id="login-message"></div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const regUsernameInput = document.getElementById('reg-username');
+            const regPasswordInput = document.getElementById('reg-password');
+            const regButton = document.getElementById('register');
+            const regMessage = document.getElementById('reg-message');
+
+            const loginUsernameInput = document.getElementById('login-username');
+            const loginPasswordInput = document.getElementById('login-password');
+            const loginButton = document.getElementById('login-button');
+            const loginMessage = document.getElementById('login-message');
+
+            regButton.addEventListener('click', () => {
+                const username = regUsernameInput.value.trim();
+                const password = regPasswordInput.value.trim();
+
+                if (username && password) {
+                    localStorage.setItem('username', username);
+                    localStorage.setItem('password', password);
+                    regMessage.style.color = 'green';
+                    regMessage.textContent = 'Registration successful!';
+                } else {
+                    regMessage.style.color = 'red';
+                    regMessage.textContent = 'Please fill in both fields.';
+                }
+            });
+
+            loginButton.addEventListener('click', () => {
+                const username = loginUsernameInput.value.trim();
+                const password = loginPasswordInput.value.trim();
+
+                const storedUsername = localStorage.getItem('username');
+                const storedPassword = localStorage.getItem('password');
+
+                if (username === storedUsername && password === storedPassword) {
+                    loginMessage.style.color = 'green';
+                    loginMessage.textContent = 'Login successful!';
+                } else {
+                    loginMessage.style.color = 'red';
+                    loginMessage.textContent = 'Invalid username or password.';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

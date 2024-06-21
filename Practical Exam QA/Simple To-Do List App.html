@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple To-Do List App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #app {
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        h2 {
+            margin: 0 0 20px 0;
+        }
+        #new-task {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #add-task {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #007BFF;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #tasks {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0 0 0;
+        }
+        .task {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .task:last-child {
+            border-bottom: none;
+        }
+        .delete {
+            background: none;
+            border: none;
+            color: #ff0000;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h2>To-Do List</h2>
+        <input type="text" id="new-task" placeholder="Add a new task...">
+        <button id="add-task">Add Task</button>
+        <ul id="tasks">
+            <li class="task">
+                <span>Pre-existing Task 1</span>
+                <button class="delete">Delete</button>
+            </li>
+            <li class="task">
+                <span>Pre-existing Task 2</span>
+                <button class="delete">Delete</button>
+            </li>
+            <li class="task">
+                <span>Pre-existing Task 3</span>
+                <button class="delete">Delete</button>
+            </li>
+        </ul>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const newTaskInput = document.getElementById('new-task');
+            const addTaskButton = document.getElementById('add-task');
+            const tasksList = document.getElementById('tasks');
+
+            // Add task event
+            addTaskButton.addEventListener('click', () => {
+                const taskText = newTaskInput.value.trim();
+
+                // Bug 1: Allow empty task to be added
+                // if (taskText === '') return;
+
+                const taskItem = document.createElement('li');
+                taskItem.className = 'task';
+                taskItem.innerHTML = `
+                    <span>${taskText}</span>
+                    <button class="delete">Delete</button>
+                `;
+
+                tasksList.appendChild(taskItem);
+
+                // Clear input
+                newTaskInput.value = '';
+
+                // Add delete event to the new task
+                // Bug 2: Delete button not working
+                // taskItem.querySelector('.delete').addEventListener('click', () => {
+                //     taskItem.remove();
+                // });
+            });
+
+            // Bug 3: Delete button does not work for existing tasks
+            const preExistingTasks = tasksList.querySelectorAll('.task');
+            preExistingTasks.forEach(taskItem => {
+                // taskItem.querySelector('.delete').addEventListener('click', () => {
+                //     taskItem.remove();
+                // });
+            });
+        });
+    </script>
+</body>
+</html>
